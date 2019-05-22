@@ -52,20 +52,21 @@
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Annotations, AnnotationLists, and TEI Encoded Texts</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="presentation-vs-archive-layers"></a><a href="#presentation-vs-archive-layers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Presentation vs. Archive Layers</h2>
 <p>There is no magic solution for displaying TEI encoded texts and images together.</p>
-<p>TEI is (in my view) and archive format: it structures and stores information well, making it easy to retrieve that information for new purposes.</p>
+<p>TEI is (in my view) an archive format:
+it structures and stores information well, making it easy to retrieve that information for new purposes.</p>
 <p>The IIIF Presentation API is primarily about &quot;presentation&quot;.
-It is not intended as long term format for storing or archiving information.</p>
+It is not intended as a long term format for storing or archiving information.</p>
 <p>The IIIF Presentation API says, if you can re-form your information according to this standard, the IIIF compatible viewers will be able to do something with it.</p>
-<p>So, for the start, I think we need work against the idea, that if I just add an element called <IIIF> to my TEI document or add some coordinates, then suddenly my browser will display images and text side by side. Likewise, we need to fight against the idea, that if I just throw some fragments of TEI encoded text into my IIIF Manifest then I'll be able to see text an image together.</p>
+<p>So, for the start, I think we need to work against the idea, that if I just add an element called <IIIF> to my TEI document or add some coordinates, then suddenly my browser will display images and text side by side. Likewise, we need to fight against the idea, that if I just throw some fragments of TEI encoded text into my IIIF Manifest then I'll be able to see text an image together.</p>
 <p>On the contrary, if we want to see image and text together, we need to link those pieces of information together according to a IIIF standard, and reformat our archival information in a way that the IIIF Viewer and native browser can understand.</p>
 <h2><a class="anchor" aria-hidden="true" id="annotation-and-annotation-list"></a><a href="#annotation-and-annotation-list" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Annotation and Annotation List</h2>
 <p>IIIF refers to this coupling as an Annotation which are collected together in AnnotationLists.</p>
 <p>To start, let's think about what information is needed in order to relate a fragment of text to particular region of an image.</p>
 <ol>
-<li><p>First 1a) we need an image and 1b) we need coordinates to locate a space on that image</p></li>
+<li><p>First 1a) we need an image (or better a canvas) and 1b) we need coordinates to locate a space on that image</p></li>
 <li><p>Second we need the content or text that we want to relate to that space.</p></li>
 </ol>
-<p>These are the basic components of annotation, which basically relates together and object and a target.</p>
+<p>These are the basic components of annotation, which basically relates together and object (resource/body) and a target (on).</p>
 <p>A 2.1 annotation <a href="http://www.openannotation.org/spec/core/">Open Annotation Specification</a></p>
 <pre><code class="hljs">{
   <span class="hljs-string">"@id"</span>: <span class="hljs-string">"http://scta.info/iiif/lon/11v/2"</span>,
@@ -96,10 +97,16 @@ It is not intended as long term format for storing or archiving information.</p>
   <span class="hljs-attr">"target"</span>: <span class="hljs-string">"https://example.org/iiif/book1/canvas/p1"</span>
 }
 </code></pre>
-<p>A IIIF AnnotationList (or in 3.0 and AnnotationPage) is a just a list or page that groups one or more annotations together.</p>
-<h2><a class="anchor" aria-hidden="true" id="two-ways-of-creating-annotations"></a><a href="#two-ways-of-creating-annotations" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Two ways of creating annotations</h2>
+<h2><a class="anchor" aria-hidden="true" id="two-ways-of-creating-annotationlists"></a><a href="#two-ways-of-creating-annotationlists" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Two ways of creating annotationLists</h2>
+<p>A IIIF AnnotationList (or in 3.0 an AnnotationPage) is a just a list or page that groups one or more annotations together.</p>
+<h3><a class="anchor" aria-hidden="true" id="an-annotation-store"></a><a href="#an-annotation-store" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>An annotation store</h3>
+<p>One way to create and store annotations is to hook up to a specific Mirador instance an annotation endpoint.</p>
+<p>This instance of Mirador as been hooked up to a database <a href="https://mirador-2-demo.netlify.com/">https://mirador-2-demo.netlify.com/</a></p>
+<p>When anyone makes annotation in this Mirador instance, then those annotations get saved to the same annotation store.</p>
+<p>When we navigate to the canvas, we can see the annotations that have been as an annotation list: <a href="https://annotot-app.herokuapp.com/annotations?uri=https://purl.stanford.edu/hg676jb4964/iiif/canvas/hg676jb4964_1&amp;format=json">https://annotot-app.herokuapp.com/annotations?uri=https://purl.stanford.edu/hg676jb4964/iiif/canvas/hg676jb4964_1&amp;format=json</a></p>
 <h3><a class="anchor" aria-hidden="true" id="a-static-annotationlist"></a><a href="#a-static-annotationlist" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>A Static annotationList</h3>
-<p>Using this template, create an annotationList:</p>
+<p>Using this template, let's create an annotationLists.</p>
+<p>Copy the template below.</p>
 <pre><code class="hljs">{
   <span class="hljs-string">"@context"</span>: <span class="hljs-string">"http://iiif.io/api/presentation/2/context.json"</span>,
   <span class="hljs-string">"@id"</span>: <span class="hljs-string">"http://example.org/iiif/book1/list/p1"</span>,
@@ -128,8 +135,9 @@ It is not intended as long term format for storing or archiving information.</p>
 }
 </code></pre>
 <ul>
-<li>Change the value of &quot;on&quot; key match the id of your canvas</li>
-<li>Add or modify coordinates to the target  a specific region of your canvas</li>
+<li>Paste the content into a new file</li>
+<li>Change the value of &quot;on&quot; key match the id of a canvas in your manifest</li>
+<li>Add or modify coordinates to target a specific region of your canvas</li>
 <li>Change the text content to &quot;My first annotation&quot;</li>
 </ul>
 <p>Save the file as <code>annotationList.json</code> in you <code>manifests</code> folder.</p>
@@ -142,52 +150,63 @@ It is not intended as long term format for storing or archiving information.</p>
 <p>Now save your <code>manifest.jsonld</code>.</p>
 <p>Now serve both your manifest and annotation list, by navigating to your manifests folder and running:</p>
 <p><code>$ live-server --cors</code></p>
-<p>Now view your manifest in Mirador.
-Turn on the view annotations icon.
-Hover over the annotation and you should see your first annotation display.</p>
+<p>Now view your manifest in Mirador.</p>
+<p>Turn on the view annotations icon.</p>
+<p>Hover over the annotation and you should see your first annotation display.</p>
 <p>The pattern of constructing such annotation is always the same.</p>
-<h3><a class="anchor" aria-hidden="true" id="an-annotation-store"></a><a href="#an-annotation-store" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>An annotation store</h3>
-<p>Another way to create and store annotations is to hook up a specific Mirador instance an annotation endpoint.</p>
-<p>This instance of Mirador as been hooked up to a database <a href="https://mirador-2-demo.netlify.com/">https://mirador-2-demo.netlify.com/</a></p>
-<p>When anyone makes annotation in this Mirador instance, then those annotations get saved to the same annotation store.</p>
-<p>When we navigate to the canvas, we can see the annotations that have been as an annotation list: <a href="https://annotot-app.herokuapp.com/annotations?uri=https://purl.stanford.edu/hg676jb4964/iiif/canvas/hg676jb4964_1&amp;format=json">https://annotot-app.herokuapp.com/annotations?uri=https://purl.stanford.edu/hg676jb4964/iiif/canvas/hg676jb4964_1&amp;format=json</a></p>
 <h3><a class="anchor" aria-hidden="true" id="pros-and-cons"></a><a href="#pros-and-cons" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pros and Cons</h3>
-<p>This approach makes it easy to create annotations, without having to generate an annotation list.</p>
-<p>Disadvantage</p>
-<p>This approach doesn't connect the annotation list with the canvas (via the otherContent), but instead expects the viewer that has been hooked up to a database to make the connection.</p>
+<p>Advantages</p>
+<p>The annotation store approach makes it easy to create annotations, without having to generate an annotation list.</p>
+<p>Disadvantages</p>
+<p>The annotation store approach doesn't connect the annotation list with the canvas (via the otherContent), but instead expects the viewer that has been hooked up to a database to make the connection.</p>
 <p>So, if you move the manifest to a new viewer, the new viewer doesn't know about the annotations and they will not be accessible.</p>
 <h2><a class="anchor" aria-hidden="true" id="thinking-about-creating-annotations-from-tei-encoded-text-data"></a><a href="#thinking-about-creating-annotations-from-tei-encoded-text-data" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Thinking about Creating Annotations from TEI-Encoded Text Data</h2>
-<p>The next challenges you will have to face is how to automate that process and construct annotations with content that comes from your well-encoded TEI files.</p>
-<p>Time doesn't permit us to work through all the steps of how one might construct such a process and there is no ONE correct way to do.</p>
-<p>Instead, I'd like to just close my illustrating/describing the steps I take to automate this process at increasingly large scale.</p>
-<p>Again, when thinking at scale, you need to think about your data sources and you are going to retain connections between them.</p>
+<p>The future challenges you will have to face is how to automate the above processes and construct annotations with content that comes from your well-encoded TEI files.</p>
+<p>Time doesn't permit us to work through all the steps of how one might construct such a process and there is no ONE correct way to do it.</p>
+<p>Instead, I'd like to just close by illustrating/describing the steps I take to automate this process at increasingly large scale.</p>
+<p>Again, when thinking at scale, you need to think about your data sources and how you are going to retain connections between them.</p>
 <p>In this regard I have three main data resources</p>
-<p>SCTA-Codices</p>
-<p>Map of Surfaces Within a Codex and the IIIF canvases for each surface</p>
-<p>SCTA-Coordinates</p>
-<p>SCTA-texts</p>
-<p>When I want create an annotation lists of lines for a given page, I query these data sources and then &quot;reconstruct&quot; them as the IIIF Api requires.</p>
-<p>So, to create an annotation list for a given canvas, I follow &quot;roughly&quot; these basic steps</p>
-<p>I start with the canvas id,
-I then move from the canvas id to the surface id
-I then move to the coordinates file, and asks for the coordinates of each line on this surface
-I then move to the SCTA-texts and asks for the text for each line</p>
-<p>Now I have the data I need.</p>
-<p>I place the text into the &quot;body&quot; under &quot;chars&quot; field
-The target is a construction of the canvasid + the coordinates.</p>
+<ul>
+<li>SCTA-Codices
+<ul>
+<li>Map of Surfaces Within a Codex and the IIIF canvases for each surface</li>
+</ul></li>
+<li>SCTA-Coordinates
+<ul>
+<li>Coordinates of regions of interests (mostly line coordinates)</li>
+</ul></li>
+<li>SCTA-texts
+<ul>
+<li>TEI encoded texts</li>
+</ul></li>
+</ul>
+<p>When I want create an annotation lists of lines for a given page, I query these data sources and then &quot;reconstruct&quot; them as the IIIF API requires.</p>
+<p>So, to create an annotation list for a given canvas, I follow &quot;roughly&quot; these basic steps:</p>
+<ol>
+<li>I start with the canvas id,</li>
+<li>I then move from the canvas id to the surface id</li>
+<li>I then move to the coordinates file, and asks for the coordinates of each line on this surface</li>
+<li>I then move to the SCTA-texts and asks for the text for each line</li>
+</ol>
+<p>Now I have the data I need to create an annotation.</p>
+<ul>
+<li>I place the text into the &quot;resource&quot; under the &quot;chars&quot; field</li>
+<li>The target is a construction of the canvasid + the coordinates.</li>
+</ul>
 <p>TADA.</p>
-<p>If you're working with a single document or a small data set you might not need to separate data sources in this way.
-You could record this information in a single TEI file.
-But the query remains the same.</p>
+<p>If you're working with a single document or a small data set you might not need to separate data sources in this way.</p>
+<p>You could record this information in a single TEI file.</p>
+<p>But the query remains the same.</p>
 <p>From the TEI file you'll need to retrieve the canvasid, then the coordinates for the lines, and then the text that corresponds to each line.</p>
-<p>If you're working with a TEI document that it structure by divs and paragraphs and not documents, you will need to convert extract the information corresponding to a material page.</p>
-<p>Using the text &quot;as document&quot; stored in the exist-DB, convert this to a new XML documents composed of <lines>, as seen here</p>
+<p>If you're working with a TEI document that is structured by divs and paragraphs and not documents, you will need to convert and extract the information corresponding to a material page.</p>
+<p>To do this I do the following:</p>
+<p>Using the text as &quot;document&quot; stored in the exist-DB, using Xquery I convert this to a new XML document composed of <lines>, as seen here:</p>
 <p><a href="https://github.com/scta/scta-app/blob/develop/folio-lines-xml.xq">https://github.com/scta/scta-app/blob/develop/folio-lines-xml.xq</a></p>
 <p>Here I rely heavily on the <code>util:get-fragment-between</code> to get the text between two milestones.</p>
-<p>Once I have text structure by line:</p>
-<p>Using XSLT, I combine this with coordinate information exported from Transkribus, as seen here:</p>
+<p>Once I have the text structured by line...</p>
+<p>...using XSLT, I combine this with coordinate information exported from Transkribus, as seen here:</p>
 <p><a href="https://github.com/scta/scta-coordinates/blob/master/scripts/coordinate-converter.xsl">https://github.com/scta/scta-coordinates/blob/master/scripts/coordinate-converter.xsl</a></p>
 <p>Once I have coordinates and text together in a new XML document, I add these files back into eXist-db to be indexed.</p>
-<p>Then I can easily convert them into IIIF annotationLists as responses to various queries, as seen here:</p>
+<p>Then I can easily convert them into IIIF annotationLists as a responses to various queries, as seen here:</p>
 <p><a href="https://github.com/scta/scta-app/blob/develop/folio-annotaiton-list-from-simpleXmlCoordinates.xq">https://github.com/scta/scta-app/blob/develop/folio-annotaiton-list-from-simpleXmlCoordinates.xq</a></p>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/IIIFWorkshop/docs/doc3"><span class="arrow-prev">← </span><span>IIIF Presentation Api</span></a><a class="docs-next button" href="/IIIFWorkshop/docs/pre-reqs"><span>Software Prerequisites and Recommended Tools</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#presentation-vs-archive-layers">Presentation vs. Archive Layers</a></li><li><a href="#annotation-and-annotation-list">Annotation and Annotation List</a></li><li><a href="#two-ways-of-creating-annotations">Two ways of creating annotations</a><ul class="toc-headings"><li><a href="#a-static-annotationlist">A Static annotationList</a></li><li><a href="#an-annotation-store">An annotation store</a></li><li><a href="#pros-and-cons">Pros and Cons</a></li></ul></li><li><a href="#thinking-about-creating-annotations-from-tei-encoded-text-data">Thinking about Creating Annotations from TEI-Encoded Text Data</a></li></ul></nav></div></div></body></html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/IIIFWorkshop/docs/doc3"><span class="arrow-prev">← </span><span>IIIF Presentation Api</span></a><a class="docs-next button" href="/IIIFWorkshop/docs/pre-reqs"><span>Software Prerequisites and Recommended Tools</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#presentation-vs-archive-layers">Presentation vs. Archive Layers</a></li><li><a href="#annotation-and-annotation-list">Annotation and Annotation List</a></li><li><a href="#two-ways-of-creating-annotationlists">Two ways of creating annotationLists</a><ul class="toc-headings"><li><a href="#an-annotation-store">An annotation store</a></li><li><a href="#a-static-annotationlist">A Static annotationList</a></li><li><a href="#pros-and-cons">Pros and Cons</a></li></ul></li><li><a href="#thinking-about-creating-annotations-from-tei-encoded-text-data">Thinking about Creating Annotations from TEI-Encoded Text Data</a></li></ul></nav></div></div></body></html>
