@@ -92,7 +92,7 @@
 <li>How big the image is</li>
 <li>Which image sizes are pre-cached</li>
 <li>Which image formats are available</li>
-<li>What are rights associated with the images</li>
+<li>What are the rights associated with the images</li>
 <li>etc.</li>
 </ul>
 <p>There are lots of ways this information could be communicated.</p>
@@ -100,18 +100,24 @@
 and gain the benefits of that coordination.</p>
 <p><a href="https://iiif.io/api/image/2.1/">The IIIF Image API &quot;standard&quot; can be consulted here</a></p>
 <p>There are two main things that the IIIF Image API rules govern.</p>
-<p><strong>URI syntax for REQUESTING images and image information.</strong></p>
 <ol>
+<li><strong>URI syntax for REQUESTING images and image information.</strong></li>
+</ol>
+<ul>
 <li><code>{scheme}://{server}{/prefix}/{identifier}/{region}/{size}/{rotation}/{quality}.{format}</code></li>
-</ol>
-<p>For example:</p>
-<p><code>http://www.example.org/image-service/abcd1234/full/full/0/default.jpg</code></p>
-<ol start="2">
+<li>For example:
+<ul>
+<li><code>http://www.example.org/image-service/abcd1234/full/full/0/default.jpg</code></li>
+</ul></li>
+</ul>
+<ul>
 <li><code>{scheme}://{server}{/prefix}/{identifier}/info.json</code></li>
+<li>For example:
+<code>http://www.example.org/image-service/abcd1234/info.json</code></li>
+</ul>
+<ol start="2">
+<li><strong>The proper RESPONSE for an image INFORMATION request in an info.json file</strong></li>
 </ol>
-<p>For example:</p>
-<p><code>http://www.example.org/image-service/abcd1234/info.json</code></p>
-<p><strong>The proper RESPONSE for an image INFORMATION request in an info.json file</strong></p>
 <p><a href="https://iiif.io/api/image/2.1/#complete-response">Example of a complete info.json response</a></p>
 <p><strong>Important</strong>: A IIIF Image Server does not identify a specific piece of software.</p>
 <p>A IIIF Image Server is any software that serves/delivers images while following the above rules.</p>
@@ -129,7 +135,7 @@ and gain the benefits of that coordination.</p>
 <li><a href="https://github.com/thisisaaronland/go-iiif">go-iiif</a> IIIF server written in go (fork of <a href="https://github.com/greut/iiif">greut/iiif</a>).</li>
 </ul>
 <p>See <a href="https://github.com/IIIF/awesome-iiif/blob/master/readme.md">https://github.com/IIIF/awesome-iiif/blob/master/readme.md</a></p>
-<p>If we start to a imagine an image viewing application might use this information, we can illustrate it as follows:</p>
+<p>If we start to imagine how an image viewing application might use this information, we can illustrate it as follows:</p>
 <p><img src="https://iiif-2-day-workshop.netlify.com/img/Deep%20zoom.jpg" alt="https://iiif-2-day-workshop.netlify.com/img/Deep%20zoom.jpg"></p>
 <p>The above image shows a viewer using the <code>info.json</code> file to learn what &quot;tile&quot; sizes have been pre-cached by the server, what size thumbnail has been pre-cached, etc. And it has used the <code>URI syntax parameters</code> to request different sizes of the image.</p>
 <h3><a class="anchor" aria-hidden="true" id="the-iiif-presentation-api-image-presentation-data"></a><a href="#the-iiif-presentation-api-image-presentation-data" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>The IIIF Presentation API (Image Presentation Data)</h3>
@@ -220,11 +226,11 @@ sächlichen Überlieferung würdigende Präsentationsschichten.</p>
 <blockquote>
 <p>(Patrick Sahle, Zwischen Mediengebundenheit und Transmedialisierung (editio 24, 2010) p. 25-26</p>
 </blockquote>
-<p>Images have in important role to play in the achievement of transparency and completeness.</p>
-<p>But there are problems</p>
+<p>Images have an important role to play in the achievement of transparency and completeness.</p>
+<p>But there are problems:</p>
 <ol>
 <li>The manuscripts for a given a text are scattered across the globe.</li>
-<li>Institution image data publication is often varied and idiosyncratic.</li>
+<li>Institutional image data publication is often varied and idiosyncratic.</li>
 </ol>
 <p>Enter IIIF.</p>
 <p>As more and more institutions adopt the IIIF standard, the dream of transparency is becoming more and more realizable.</p>
@@ -243,9 +249,10 @@ sächlichen Überlieferung würdigende Präsentationsschichten.</p>
 <p>This redundancy is wasteful.</p>
 <p>Rather than collaborating by always building on top of the work that has already been done,
 scholars are competing to make redundant data.</p>
-<p>But allow multiple users to work with a common image resources, IIIF can help change this.</p>
-<p>Scholars can create auxiliary data and associate it with IIIF image resource,
-and then publish that data. Subsequently, and image viewer can retrieve that related data and display alongside the target resource.</p>
+<p>We need to allow multiple users to work with a common image resources.</p>
+<p>IIIF can help make this possible.</p>
+<p>Scholars can create auxiliary data and associate it with IIIF image/canvas resources,
+and then publish that data. Subsequently, an image viewer can retrieve that related data and display it alongside the target resource.</p>
 <p>Examples:</p>
 <p><img src="https://s3.amazonaws.com/lum-faculty-jcwitt-public/iiif-ldn-leipzig-fragmentarium.png" alt="https://s3.amazonaws.com/lum-faculty-jcwitt-public/iiif-ldn-leipzig-fragmentarium.png"></p>
 <p><img src="https://s3.amazonaws.com/lum-faculty-jcwitt-public/iiif-ldn-leipzig-announcement.png" alt="https://s3.amazonaws.com/lum-faculty-jcwitt-public/iiif-ldn-leipzig-announcement.png"></p>
